@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.mycompany;
+package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
-import javax.inject.Inject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,32 +10,23 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author martin
+ * @author pc
  */
-@Stateless
-@LocalBean
-@Entity
-public class User {
+@Entity(name = "UserData")
+public class User implements Serializable {
 
-    @Id@GeneratedValue
-    private int id;
+    @Id
+        private String username;
+
     private String name;
-    private String username;
     private String password;
+    @OneToMany
     private List<User> followers;
+    @OneToMany
     private List<User> following;
 
-    @Inject
-    @OneToMany(mappedBy = "id")
+    @OneToMany
     private List<Tweet> tweets;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -91,8 +76,10 @@ public class User {
         this.tweets = tweets;
     }
 
-    public User(int id, String name, String username, String password, List<User> followers, List<User> following, List<Tweet> tweets) {
-        this.id = id;
+    public User() {
+    }
+
+    public User(String name, String username, String password) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -100,26 +87,5 @@ public class User {
         this.following = new ArrayList<User>();
     }
 
-    public void Login() {
-    }
-
-    public void Logout() {
-    }
-
-    public void NewTweet() {
-
-    }
-
-    public void DeleteTweet(){
-    
-    }
-    
-    public List<Tweet> SearchTrending(String subject) {
-        //todo  
-        return tweets;
-    }
-
-    public void FollowUser(User user) {
-    }
 
 }
